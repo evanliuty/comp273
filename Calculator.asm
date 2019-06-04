@@ -1,7 +1,8 @@
-#Calculator
-#You will recieve marks based 
-#on functionality of your calculator.
-#REMEMBER: invalid inputs are ignored.
+//  Ⓒ Copyright Tianyi Liu 2017, All Rights Reserved.
+//  For reference only.
+//  If you use or partially use this repo, you shall formally acknowledge this repo.
+//  Latest Update: 12:26 June 4th, 2019 CST
+
 	.data
 info1:	.asciiz "calculator for MIPS\npress 'c' for clear and 'q' to quit:\nAny unknown key will NOT be stored and echoed!\n"
 info2: 	.asciiz "Result: "
@@ -12,20 +13,20 @@ info5: 	.asciiz "\nERROR\nDivided by zero."
 	.globl main
 main:
 	li $s7,10		# hard code 10
-	
+
 	la $s0,info1		# print info1
 infoloop1:
 	lb $a0,0($s0)
 	beq $a0,$zero,init
 	jal Write
-	addi $s0,$s0,1	
+	addi $s0,$s0,1
 	j infoloop1
-	
+
 init:				# clear all
 	li $t2,0
 	li $t3,0
 	li $s1,0
-	
+
 cal:
 	li $t4,0
 	li $t5,0
@@ -45,12 +46,12 @@ valid1:
 	beq $v0,42,multi	# *
 	beq $v0,47,divi		# /
 	beq $v0,32,cal		# space ignore
-	
+
 	# FIRST NUMBER FOR ALL
-	li $t2,0	
+	li $t2,0
 	mul $t2,$t2,$s7		# *10
-	move $t3,$v0		
-	andi $t3,$t3,0x0f	
+	move $t3,$v0
+	andi $t3,$t3,0x0f
 	add $t2,$t2,$t3		# first num in $t2
 	j cal1
 
@@ -69,10 +70,10 @@ valid2:
 	beq $v0,42,multi	# *
 	beq $v0,47,divi		# /
 	beq $v0,32,cal		# space ignore
-	
+
 	# FIRST NUMBER FOR ALL
 	mul $t2,$t2,$s7		# *10
-	move $t3,$v0		
+	move $t3,$v0
 	andi $t3,$t3,0x0f
 	beq $s1,-1,nega1	# if negative, then subtract
 	add $t2,$t2,$t3		# positive add
@@ -93,15 +94,15 @@ valid3:
 	beq $v0,99,clear	# clear
 	beq $v0,32,plus		# +
 	beq $v0,10,plusresult	# \n disp result
-	
+
 	#SECOND NUMBER FOR PLUS
 	beq $v0,45,psn		# plus second negative
 	mul $t4,$t4,$s7		# *10
-	move $t5,$v0	
+	move $t5,$v0
 	andi $t5,$t5,0x0f
 	add $t4,$t4,$t5		# second number in $s4
 	j plus
-psn:	
+psn:
 	li $t6,-1		# $t6, sign flag
 	j plus
 
@@ -122,7 +123,7 @@ valid4:
 	beq $v0,99,clear	# clear
 	beq $v0,32,multi	# *
 	beq $v0,10,multiresult	# \b display result
-	
+
 	#SECOND NUMBER FOR MULTI
 	beq $v0,45,mulsn	# multi second negative
 	mul $t4,$t4,$s7		# *10
@@ -130,7 +131,7 @@ valid4:
 	andi $t5,$t5,0x0f
 	add $t4,$t4,$t5		# second number in $t4
 	j multi
-mulsn:	
+mulsn:
 	li $t6,-1		# sign flag
 	j multi
 multiresult:
@@ -141,7 +142,7 @@ multiresult:
 divi:
 	jal Read
 	jal check		# validtion check
-	beq $v1,$zero,valid5	
+	beq $v1,$zero,valid5
 	j divi
 valid5:
 	move $a0,$v0
@@ -156,7 +157,7 @@ valid5:
 	beq $v0,45,divisn	# divi second negative
 	mul $t4,$t4,$s7		# *10
 	move $t5,$v0
-	andi $t5,$t5,0x0f	
+	andi $t5,$t5,0x0f
 	add $t4,$t4,$t5		# second number in $t4
 
 divi1:
@@ -169,7 +170,7 @@ valid6:
 	jal Write
 	beq $v0,113,end		# exit
 	beq $v0,99,clear	# clear
-	beq $v0,32,divi		# / 
+	beq $v0,32,divi		# /
 	beq $v0,10,diviresult	# \n display result
 
 	#SECOND NUMBER FOR DIVI
@@ -178,11 +179,11 @@ valid6:
 	andi $t5,$t5,0x0f
 	add $t4,$t4,$t5		# scond number in $t4
 	j divi1
-	
-divisn:	
+
+divisn:
 	li $t6,-1
 	j divi1
-	
+
 diviresult:
 	mul $t4,$t4,$t6		# real second number
 	div $t2,$t4		# divison
@@ -219,7 +220,7 @@ valid8:
 	beq $v0,113,end		# exit
 	beq $v0,99,clear	# clear
 	beq $v0,10,minusresult	# \n display result
-	
+
 	#SECOND NUMBER FOR MINUS
 	beq $v0,45,minsn	# minus second negative
 	mul $t4,$t4,$s7		# *10
@@ -227,13 +228,13 @@ valid8:
 	andi $t5,$t5,0x0f
 	add $t4,$t4,$t5
 	j minus
-minsn:	
+minsn:
 	li $t6,-1		# sign flag
 	j minus
 minusresult:
 	mul $t4,$t4,$t6		# real seccond number
 	sub $t7,$t2,$t4		# subtraction
-	j disp	
+	j disp
 
 # DIVISION ERROR
 diverr:
@@ -242,7 +243,7 @@ infoloop5:
 	lb $a0,0($s0)
 	beq $a0,$zero,clear	# jump to clear
 	jal Write
-	addi $s0,$s0,1	
+	addi $s0,$s0,1
 	j infoloop5
 
 # DISPLAY RESULT FOR + - * / WITHOUT REMINDER
@@ -252,9 +253,9 @@ infoloop2:
 	lb $a0,0($s0)
 	beq $a0,$zero,disp1
 	jal Write
-	addi $s0,$s0,1	
+	addi $s0,$s0,1
 	j infoloop2
-	
+
 disp1:
 	beq $t7,$zero,disspecial# diaplay zero
 	li $s5,0		# Counter
@@ -262,7 +263,7 @@ disp1:
 	bgt $0,$t7,dispneg	# negative
 	j dispcont
 dispneg:
-	mul $t7,$t7,-1	
+	mul $t7,$t7,-1
 	li $a0,45		# negative sign
 	jal Write
 dispcont:
@@ -302,7 +303,7 @@ infoloop4:
 	lb $a0,0($s0)
 	beq $a0,$zero,init
 	jal Write
-	addi $s0,$s0,1	
+	addi $s0,$s0,1
 	j infoloop4
 
 # END
@@ -312,7 +313,7 @@ infoloop3:
 	lb $a0,0($s0)
 	beq $a0,$zero,endd
 	jal Write
-	addi $s0,$s0,1	
+	addi $s0,$s0,1
 	j infoloop3
 endd:
 	li $v0,10		# terminate
@@ -365,7 +366,7 @@ Read:  	lui $t0, 0xffff #ffff0000
 Loop1:	lw $t1, 0($t0) #control
 	andi $t1,$t1,0x0001
 	beq $t1,$zero,Loop1
-	lw $v0, 4($t0) #data	
+	lw $v0, 4($t0) #data
 	jr $ra
 
 #driver for putting output to MIPS display
@@ -373,7 +374,7 @@ Write:  lui $t0, 0xffff #ffff0000
 Loop2: 	lw $t1, 8($t0) #control
 	andi $t1,$t1,0x0001
 	beq $t1,$zero,Loop2
-	sw $a0, 12($t0) #data	
+	sw $a0, 12($t0) #data
 	jr $ra
 
 # DISPLAY RESULT FOR / WITH REMINDER ONLY
@@ -388,18 +389,18 @@ infoloop2d:
 	lb $a0,0($s0)
 	beq $a0,$zero,disp1d
 	jal Write
-	addi $s0,$s0,1	
+	addi $s0,$s0,1
 	j infoloop2d
-	
+
 disp1d:
 	# Reminder
 	mtc1 $t9,$f4
 	cvt.s.w $f4,$f4
-	
+
 	# 10
 	mtc1 $s7,$f5
 	cvt.s.w $f5,$f5
-	
+
 	# 0.005
 	li $t9,5
 	mtc1 $t9,$f6
@@ -407,21 +408,21 @@ disp1d:
 	div.s $f6,$f6,$f5
 	div.s $f6,$f6,$f5
 	div.s $f6,$f6,$f5
-	
+
 	# divider
 	mtc1 $t4,$f7
 	cvt.s.w $f7,$f7
-	
+
 	# -1
 	li $s2,-1
 	mtc1 $s2,$f16
 	cvt.s.w $f16,$f16
 	#dIVISION
 	div.s $f4,$f4,$f7
-	
+
 	#rounding
 	mov.s $f10,$f4
-	
+
 	bne $t6,-1,posres
 	sub.s $f10,$f10,$f6	# subtract if negative
 	j posres1
@@ -430,21 +431,21 @@ posres:
 posres1:
 	mul.s $f10,$f10,$f5	# *100
 	mul.s $f10,$f10,$f5
-	
+
 	cvt.w.s $f10,$f10
 	mfc1 $s4,$f10		# float to int
-	
+
 	bne $t6,-1,posres2
 	mul $s4,$s4,$t6
 	ble $s4,99,contdivi	# case number >= .995.....
 	addi $t7,$t7,-1		# negative case rounding
 	j disp
-posres2:	
+posres2:
 	ble $s4,99,contdivi
 	addi $t7,$t7,1
 	j disp
-	
-contdivi:	
+
+contdivi:
 	beq $t7,$zero,disspeciald	# with decimal part but integer part =0
 	li $s5,0		# Counter
 	move $s6,$t7
@@ -484,13 +485,13 @@ dispdoned:
 	move $a0,$s2
 	addi $a0,$a0,48
 	jal Write
-dispdone2:	
+dispdone2:
 	li $a0,10
 	jal Write
 	beq $t6,-1,rounding2		# neagative rounding
 	ble $s4,49,noround3
 	addi $s6,$s6,1			# rounding
-noround3:	
+noround3:
 	move $t2,$s6
 	j cal
 rounding2:
@@ -499,15 +500,15 @@ rounding2:
 round1:
 	addi $s6,$s6,-1
 	j noround3
-	
+
 disspeciald:
 	bne $t6,-1,dispspeciald2
 	li $a0,45		# negative sign
 	jal Write
-dispspeciald2:	
+dispspeciald2:
 	li $a0,48		# 0
 	jal Write
-	
+
 	li $a0,46
 	jal Write
 	div $s4,$s7		# /10
@@ -520,13 +521,13 @@ dispspeciald2:
 	move $a0,$s2
 	addi $a0,$a0,48
 	jal Write
-dispdone3:	
+dispdone3:
 	li $a0,10
 	jal Write
 	beq $t6,-1,rounding	# rounding similar to above
 	ble $s4,49,noround2
 	addi $t7,$t7,1
-noround2:	
+noround2:
 	move $t2,$t7
 	j cal
 rounding:
