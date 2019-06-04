@@ -1,9 +1,12 @@
-# fileio.asm
-	
+#  Ⓒ Copyright Tianyi Liu 2017, All Rights Reserved.
+#  For reference only.
+#  If you use or partially use this repo, you shall formally acknowledge this repo.
+#  Latest Update: 12:55 June 4th, 2019 CST
+
 .data
 
 #Must use accurate file path.
-#These file paths are EXAMPLES, 
+#These file paths are EXAMPLES,
 #should not work for you
 str1:	.asciiz "/Users/Bao/Dropbox/Year 3 Semester 1/COMP 273/Assignment/Assignment 4/test1.txt"
 str2:	.asciiz "/Users/Bao/Dropbox/Year 3 Semester 1/COMP 273/Assignment/Assignment 4/test2.txt"
@@ -33,31 +36,31 @@ readfile:
 	li $a1,0		# read
 	li $a2,0		# mode ignored
 	syscall
-	
+
 	addi $v0,$v0,1		#check if file exist
 	ble $v0,$0,errore	# if not exist, error and exit
 	subi $v0,$v0,1
 	move $t0,$v0		# file descriptor in $t0
-	
+
 	li $v0,14		# read file
-	la $a1,buffer		
+	la $a1,buffer
 	li $a2,2047
 	move $a0,$t0
 	syscall
-	
+
 	addi $v0,$v0,1		# check if therr is any error
 	ble $v0,$0,errorr
 	subi $v0,$v0,1
-	
+
 	la $a0,buffer		# print buffer
 	li $v0,4
 	syscall
-	
+
 	li $v0,16		# close the file
 	move $a0,$t0
 	syscall
 	jr $ra
-	
+
 #Open the file to be read,using $a0
 #Conduct error check, to see if file exists
 
@@ -74,39 +77,39 @@ readfile:
 
 
 writefile:
-	move $t0,$a1		# save addr 
+	move $t0,$a1		# save addr
 	li $v0,13		# open file
 	li $a1,1		# write
 	li $a2,0		# ignore
 	syscall
-	
+
 	addi $v0,$v0,1		#check if file exist
 	ble $v0,$0,errore	# if not exist, error and exit
 	subi $v0,$v0,1
-	
+
 	move $t1,$v0		# save file descriptor
-	
+
 	li $v0,15		# write file
 	move $a0,$t1		# file descriptor
 	la $a1, info
 	li $a2,12
 	syscall
-	
+
 	addi $v0,$v0,1		# check if file exist
 	ble $v0,$0,errorw	# if not exist, error and exit
 	subi $v0,$v0,1
-	
+
 	li $v0,15		# write file
 	move $a1,$t0
 	li $a2,2048
 	syscall
-	
+
 	li $v0,16
 	syscall
-	
+
 	jr $ra
-	
-	
+
+
 #open file to be written to, using $a0.
 #write the specified characters as seen on assignment PDF:
 #P2
@@ -115,44 +118,44 @@ writefile:
 #write the content stored at the address in $a1.
 #close the file (make sure to check for errors)
 
-errore:	
+errore:
 	move $t0,$a0
-	
+
 	li $v0, 4		# print str
 	la $a0, erre
 	syscall
-	
+
 	li $v0,16		# close the file
 	move $a0,$t0
 	syscall
-	
+
 	li $v0,10		# exit
 	syscall
-	
-errorr:	
+
+errorr:
 	move $t0,$a0
-	
+
 	li $v0, 4		# print str
 	la $a0, errr
 	syscall
-		
+
 	li $v0,16		# close the file
 	move $a0,$t0
 	syscall
-	
+
 	li $v0,10		# exit
 	syscall
-	
-errorw:	
+
+errorw:
 	move $t0,$a0
-	
+
 	li $v0, 4		# print str
 	la $a0, errw
 	syscall
-		
+
 	li $v0,16		# close the file
 	move $a0,$t0
 	syscall
-	
+
 	li $v0,10		# exit
 	syscall

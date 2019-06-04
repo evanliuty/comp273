@@ -1,5 +1,7 @@
-#StudentID: 260809642
-#Name: Tianyi LIU
+#  Ⓒ Copyright Tianyi Liu 2017, All Rights Reserved.
+#  For reference only.
+#  If you use or partially use this repo, you shall formally acknowledge this repo.
+#  Latest Update: 12:55 June 4th, 2019 CST
 
 	.data
 start:	 .asciiz	"Please start to enter character(s)\nCharacters on the keyboard are supported\nAsterisk (*) marks the end.\n\n"
@@ -22,42 +24,42 @@ main:
 	li $v0, 4
 	la $a0, start
 	syscall
-	
+
 	jal build
 	move $s1,$v1	#Save addr
 	move $s0,$v0	#Save length
-	
+
 	#Print string
 	li $v0, 4
 	la $a0, string2
 	syscall
-	
+
 	move $a0,$s1	#Pass addr
 	move $a1,$s0	#Pass length
-	
+
 	jal print
-	
+
 	move $a0,$s1	#Pass addr
 	move $a1,$s0	#Pass length
-	
+
 	jal reverse
-	
+
 	move $a2,$v1	#Save addr
-	
+
 	#Print string
 	li $v0, 4
 	la $a0,newline
 	syscall
-	
+
 	#Print string
 	li $v0, 4
 	la $a0, string3
 	syscall
-	
+
 	move $a0,$a2	#Pass addr
 	move $a1,$s0	#Pass length
 	jal print
-	
+
 	#Terminate
 	li $v0,10
 	syscall
@@ -77,51 +79,51 @@ build:
 	#Save $ra
 	addi $sp, $sp, -4
 	sw $ra,0($sp)
-	
+
 loop:
 	#Print string
 	li $v0, 4
 	la $a0, string1
 	syscall
-	
+
 	#Read char
 	li $v0,12
 	syscall
 	move $t2,$v0	#copy char to $t2
-	
+
 	#Print string
 	li $v0, 4
 	la $a0,newline
 	syscall
-	
+
 	#Terminate
 	beq $t2,$t0,end
-	
+
 	#Allocate 5 bytes
 	li $a0,5
 	jal malloc
-	
+
 	beq $t1,$0,build2
-	
+
 	sw $v0,0($t4)	#Save addr
 
-build2:	
+build2:
 	move $t3,$v0	#copy addr to $t3
 
 	#Save original address
 	bne $t1,$0,cont
 	move $v1,$t3
-	
+
 cont:	#Store
 	addi $t3,$t3,4
 	sb $t2,0($t3)	#Save char
-	
+
 	#Save previous addr
 	addi $t3,$t3,-4
 	move $t4,$t3
-	
+
 	addi $t1,$t1,1	#Counter++
-	
+
 	#Loop
 	j loop
 
@@ -136,45 +138,45 @@ end:
 	sw $v0,0($t4)	#Save addr
 	#Restore $ra
 
-endd:	
+endd:
 	move $v0,$t1 	#Save length
 	lw $ra,0($sp)
 	addi $sp,$sp,4
-	jr $ra	
-	
+	jr $ra
+
 #continually ask for user input UNTIL user inputs "*"
 #FOR EACH user inputted character inG, create a new node that hold's inG AND an address for the next node
 #at the end of build, return the address of the first node to $v1
 
 print:
 	move $t0,$a0
-	
+
 	#If length = 0 end
 	beq $a1,$0,endprint
 
 loopp:	addi $t0,$t0,4
-	
+
 	#Load char
 	lb $t1,0($t0)
-	
+
 	#Terminate
 	beq $t1,$0,endprint
-	
+
 	#Print char
 	li $v0,11
 	move $a0,$t1
 	syscall
-	
-	#Next node 
+
+	#Next node
 	addi $t0,$t0,-4
 	lw $t0,0($t0)
-	
+
 	#loop
 	j loopp
 
 endprint:
 	jr $ra
-	
+
 #$a0 takes the address of the first node
 #prints the contents of each node in order
 
@@ -191,7 +193,7 @@ reverse:
 	beq $t1,$0,endrd
 
 #the first and second node
-loopr:	
+loopr:
 	beq $t1,$0,endr
 	addi $t1,$t1,-1	#length--
 	lw $t4,0($t2)	#$t4=node 1's value
@@ -203,17 +205,17 @@ loopr:
 loo:	beq $t1,$0,endr	#length=0, stop
 	addi $t1,$t1,-1	#length--
 	move $t4,$t5	#$t4=node 2's value
-	lw $t5,0($t4)	
+	lw $t5,0($t4)
 	sw $t2,0($t4)
 	move $t2,$t4
 	j loo
-	
+
 endr:
 	sw $t5,0($t3)	#save the null
 	move $v1,$t4	#return value
-endrd:	
+endrd:
 	jr $ra
-	
+
 #$a1 takes the address of the first node of a linked list
 #reverses all the pointers in the linked list
 #$v1 returns the address
@@ -223,4 +225,3 @@ malloc:
 	li $v0,9
 	syscall
 	jr $ra
-	
