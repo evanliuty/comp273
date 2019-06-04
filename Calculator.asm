@@ -1,7 +1,7 @@
-//  Ⓒ Copyright Tianyi Liu 2017, All Rights Reserved.
-//  For reference only.
-//  If you use or partially use this repo, you shall formally acknowledge this repo.
-//  Latest Update: 12:26 June 4th, 2019 CST
+#  Ⓒ Copyright Tianyi Liu 2017, All Rights Reserved.
+#  For reference only.
+#  If you use or partially use this repo, you shall formally acknowledge this repo.
+#  Latest Update: 12:26 June 4th, 2019 CST
 
 	.data
 info1:	.asciiz "calculator for MIPS\npress 'c' for clear and 'q' to quit:\nAny unknown key will NOT be stored and echoed!\n"
