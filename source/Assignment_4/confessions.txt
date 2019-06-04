@@ -1,0 +1,32 @@
+COMP 273 
+Assignment 4
+Tianyi LIU 
+260809642
+
+Q2:
+	1. The program read the numbers at the boundary without any
+		calculations as suggested by Prof during lectures.
+	2. There are several codes like the following:
+			addi $t2,$t2,1
+			bgt $t2,$0,continue
+			addi $t2,$t2,256
+		continue:
+			addi $t2,$t2,-1
+		As it is likely that MIPS uses signed char which means
+		ASCII number >127 will read as negative number
+		(I have tested on this and it is true)
+		So I use these conversion code. If the byte loaded is 			negative, then convert it back to 0-255.
+
+Q3:
+	1. The calculator displays division result with reminder separately.
+		1) For example 4.25 is display as 
+			4 (number I) . (hard code decimal) 25 (number D)
+		2) Then perform rounding bases on number I and number D
+	2. The calculator displays decimal part only when the result 
+		has decimal part (i.e. some division calculations).
+	3. Whenever the user input 'c' or 'q' the program will be cleared or 		terminated. (i.e. do not need to press enter key)
+	4. Any unknown key will be ignored and will NOT be echoed and stored.
+	5. Operation after division uses the rounded result:
+		Previous result: -4.3
+		Operation: + 5
+		----> -4.3 --rounding--> -4 --+5--> 1 (Final Result)
