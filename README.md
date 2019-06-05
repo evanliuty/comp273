@@ -1,5 +1,4 @@
 # COMP273: Introduction to Computer Systems
-*A Simple Calculator*
 
 *Ⓒ Copyright Tianyi Liu 2017, All Rights Reserved.*
 
