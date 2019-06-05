@@ -9,7 +9,7 @@ This repo contains the source code developed for COMP273, delivered by [Prof. Ka
 💥**If you use or partially use this repo, you shall formally - in report or presentation - acknowledge this repo.**
 
 ## Introduction
-COMP273 covers digital circuit and assembly programming in MIPS. This repo is assembly part of COMP273.
+COMP273 covers digital circuit and assembly programming in **MIPS**. This repo is assembly part of COMP273.
 
 ### Structure of this repo
 `source` contains all the source files
@@ -24,4 +24,4 @@ COMP273 covers digital circuit and assembly programming in MIPS. This repo is as
 ## Repo Highlights
 Some recursive programs can be found [here](https://github.com/evanliuty/comp273/tree/master/source/Assignment_3).
 
-A interesting calculator can be found [here](https://github.com/evanliuty/comp273/tree/master/source/Assignment_4/calculator.asm).
+An interesting calculator can be found [here](https://github.com/evanliuty/comp273/tree/master/source/Assignment_4/calculator.asm).
