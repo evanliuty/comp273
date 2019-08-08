@@ -19,7 +19,7 @@ COMP273 covers digital circuit and assembly programming in **MIPS**. This repo i
 ## Description
 [Assignment 3](https://github.com/evanliuty/comp273/blob/master/doc/a3.pdf)
 
-[Assignment 4](https://github.com/evanliuty/comp273/blob/master/doc/a3.pdf)
+[Assignment 4](https://github.com/evanliuty/comp273/blob/master/doc/a4.pdf)
 
 ## Repo Highlights
 Some recursive programs can be found [here](https://github.com/evanliuty/comp273/blob/master/source/Assignment_3).
